@@ -17,7 +17,7 @@ ERROR_DIR = "/media/raptor/Music-Errors/"
 
 unsorted = os.listdir(UNSORTED_DIR)
 if unsorted and len(unsorted):
-    logging.info("Sorting " + len(unsorted) + " files")
+    logging.info("Sorting %d files", len(unsorted))
 
 for unsorted_file in unsorted:
     tags = mutagen.File(UNSORTED_DIR + unsorted_file, easy=True)
