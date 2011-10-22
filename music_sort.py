@@ -43,10 +43,10 @@ for unsorted_file in unsorted:
     if 'title' in tags:
         title = tags['title'][0] + os.path.splitext(unsorted_file)[1].strip()
         if 'tracknumber' in tags:
-            title = "{0:0>2} - {1}".format(
+            title = "{0:0>2} {1}".format(
                     tags['tracknumber'][0].split('/')[0], title)
             if 'discnumber' in tags and tags['discnumber'][0] != u'1/1':
-                title = tags['discnumber'][0].split('/')[0] + ':' + title
+                title = tags['discnumber'][0].split('/')[0] + '-' + title
     else:
         title = unsorted_file
 
