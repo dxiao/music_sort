@@ -1,0 +1,8 @@
+music_sort.py - python script to sort music files into a directory heirarchy
+
+needs the mutagen python package
+
+install:
+    modify the crontab entry, and add it to the scheduler
+    create appropriate unsorted, sorted, error folders
+    create log file
