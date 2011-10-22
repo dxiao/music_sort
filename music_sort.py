@@ -5,15 +5,15 @@ import os
 import shutil
 import logging
 
-logging.basicConfig(filename='/var/log/music_sorting', level=logging.DEBUG)
+logging.basicConfig(filename='/var/log/music_sort', level=logging.DEBUG)
 
-#UNSORTED_DIR = "/media/raptor/Music-Inbox/"
-#SORTED_DIR = "/media/raptor/Music/"
-#ERROR_DIR = "/media/raptor/Music-Errors/"
+UNSORTED_DIR = "/media/raptor/Music-Inbox/"
+SORTED_DIR = "/media/raptor/Music/"
+ERROR_DIR = "/media/raptor/Music-Errors/"
 
-UNSORTED_DIR = './Unsorted/'
-SORTED_DIR = './Sorted/'
-ERROR_DIR = './Error/'
+#UNSORTED_DIR = './Unsorted/'
+#SORTED_DIR = './Sorted/'
+#ERROR_DIR = './Error/'
 
 unsorted = os.listdir(UNSORTED_DIR)
 if unsorted and len(unsorted):
