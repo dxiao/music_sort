@@ -5,7 +5,9 @@ import os
 import shutil
 import logging
 
-logging.basicConfig(filename='/var/log/music_sort', level=logging.DEBUG)
+logging.basicConfig(format='%(asctime)s %(message)s', 
+    datefmt='%m/%d/%Y %H:%M:%S', 
+    filename='/var/log/music_sort', level=logging.DEBUG)
 
 UNSORTED_DIR = "/media/raptor/Music-Inbox/"
 SORTED_DIR = "/media/raptor/Music/"
@@ -17,7 +19,7 @@ ERROR_DIR = "/media/raptor/Music-Errors/"
 
 unsorted = os.listdir(UNSORTED_DIR)
 if unsorted and len(unsorted):
-    logging.info("Sorting %d files", len(unsorted))
+    logging.info("Sorting %d files: " + str(unsorted), len(unsorted))
 
 for unsorted_file in unsorted:
     tags = mutagen.File(UNSORTED_DIR + unsorted_file, easy=True)
