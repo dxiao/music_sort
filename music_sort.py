@@ -63,4 +63,5 @@ for unsorted_file in unsorted:
         shutil.move(UNSORTED_DIR + unsorted_file, 
             SORTED_DIR+artist + '/' + album + '/' + title)
     except IOError, why:
+        shutil.move(UNSORTED_DIR + unsorted_file, ERROR_DIR + unsorted_file)
         logging.warning(' ** IOERROR: ' +  str(why))
