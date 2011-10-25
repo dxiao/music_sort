@@ -9,6 +9,9 @@ logging.basicConfig(format='%(asctime)s %(message)s',
     datefmt='%m/%d/%Y %H:%M:%S', 
     filename='/var/log/music_sort', level=logging.DEBUG)
 
+def sanitize (string):
+    return re.sub('[/\\\?\*:]', '_', string)
+
 UNSORTED_DIR = "/media/raptor/Music-Inbox/"
 SORTED_DIR = "/media/raptor/Music/"
 ERROR_DIR = "/media/raptor/Music-Errors/"
@@ -51,6 +54,10 @@ for unsorted_file in unsorted:
                 title = tags['discnumber'][0].split('/')[0] + '-' + title
     else:
         title = unsorted_file
+
+    title = sanitize(title)
+    album = sanitize(album)
+    artist= sanitize(artist)
 
     logging.info("    " + SORTED_DIR + artist + '/' + album + '/' + title)
 
