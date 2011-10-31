@@ -6,23 +6,23 @@ import shutil
 import logging
 import re
 
-#logging.basicConfig(format='%(asctime)s %(message)s', 
-#    datefmt='%m/%d/%Y %H:%M:%S', 
-#    filename='/var/log/music_sort', level=logging.DEBUG)
 logging.basicConfig(format='%(asctime)s %(message)s', 
     datefmt='%m/%d/%Y %H:%M:%S', 
-    filename='./log.log', level=logging.DEBUG)
+    filename='/var/log/music_sort', level=logging.DEBUG)
+#logging.basicConfig(format='%(asctime)s %(message)s', 
+#    datefmt='%m/%d/%Y %H:%M:%S', 
+#    filename='./log.log', level=logging.DEBUG)
 
 def sanitize (string):
     return re.sub('[/\\\?\*:]', '_', string)
 
-#UNSORTED_DIR= "/media/raptor/Music-Inbox/"
-#SORTED_DIR  = "/media/raptor/Music/"
-#ERROR_DIR   = "/media/raptor/Music-Errors/"
+UNSORTED_DIR= "/media/raptor/Music-Inbox/"
+SORTED_DIR  = "/media/raptor/Music/"
+ERROR_DIR   = "/media/raptor/Music-Errors/"
 
-UNSORTED_DIR= './Unsorted/'
-SORTED_DIR  = './Sorted/'
-ERROR_DIR   = './Error/'
+#UNSORTED_DIR= './Unsorted/'
+#SORTED_DIR  = './Sorted/'
+#ERROR_DIR   = './Error/'
 
 logging.info("---")
 logging.info("Starting new music scan...")
@@ -52,7 +52,8 @@ for unsorted_file in unsorted:
     tags = mutagen.File(UNSORTED_DIR + unsorted_file, easy=True)
 
     if not tags:
-        shutil.move(UNSORTED_DIR + unsorted_file, ERROR_DIR + unsorted_file)
+        shutil.move(UNSORTED_DIR + unsorted_file, 
+                ERROR_DIR + os.path.split(unsorted_file)[1])
         logging.warning(" ** Unable to find music interpreter for file "
              + unsorted_file)
         continue
@@ -72,7 +73,7 @@ for unsorted_file in unsorted:
     if 'title' in tags:
         title = tags['title'][0] + os.path.splitext(unsorted_file)[1].strip()
         if 'tracknumber' in tags:
-            title = "{0:0>2} {1}".format(
+            title = u"{0:0>2} {1}".format(
                     tags['tracknumber'][0].split('/')[0], title)
             if 'discnumber' in tags and tags['discnumber'][0] != u'1/1':
                 title = tags['discnumber'][0].split('/')[0] + '-' + title
@@ -95,7 +96,7 @@ for unsorted_file in unsorted:
         shutil.move(UNSORTED_DIR + unsorted_file, 
             SORTED_DIR+artist + '/' + album + '/' + title)
     except IOError, why:
-        shutil.move(UNSORTED_DIR + unsorted_file, ERROR_DIR + unsorted_file)
+        shutil.move(UNSORTED_DIR + unsorted_file, ERROR_DIR + title)
         logging.warning(' ** IOERROR: ' +  str(why))
 
 logging.info("Removing directories " + str(folders))
