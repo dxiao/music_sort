@@ -4,23 +4,47 @@ import mutagen
 import os
 import shutil
 import logging
+import re
 
+#logging.basicConfig(format='%(asctime)s %(message)s', 
+#    datefmt='%m/%d/%Y %H:%M:%S', 
+#    filename='/var/log/music_sort', level=logging.DEBUG)
 logging.basicConfig(format='%(asctime)s %(message)s', 
     datefmt='%m/%d/%Y %H:%M:%S', 
-    filename='/var/log/music_sort', level=logging.DEBUG)
+    filename='./log.log', level=logging.DEBUG)
 
 def sanitize (string):
     return re.sub('[/\\\?\*:]', '_', string)
 
-UNSORTED_DIR = "/media/raptor/Music-Inbox/"
-SORTED_DIR = "/media/raptor/Music/"
-ERROR_DIR = "/media/raptor/Music-Errors/"
+#UNSORTED_DIR= "/media/raptor/Music-Inbox/"
+#SORTED_DIR  = "/media/raptor/Music/"
+#ERROR_DIR   = "/media/raptor/Music-Errors/"
 
-#UNSORTED_DIR = './Unsorted/'
-#SORTED_DIR = './Sorted/'
-#ERROR_DIR = './Error/'
+UNSORTED_DIR= './Unsorted/'
+SORTED_DIR  = './Sorted/'
+ERROR_DIR   = './Error/'
 
-unsorted = os.listdir(UNSORTED_DIR)
+logging.info("---")
+logging.info("Starting new music scan...")
+logging.info("")
+
+unsorted    = os.listdir(UNSORTED_DIR)
+found_dir   = True
+folders     = []
+while found_dir:
+    found_dir   = False
+    newunsorted = []
+    for entry in unsorted:
+        if os.path.isdir(UNSORTED_DIR + entry):
+            logging.info("Expanding into directory %s", entry)
+            folders.insert(0, entry)
+            newunsorted.extend([entry + "/" + x for x in 
+                    os.listdir(UNSORTED_DIR + entry)])
+            found_dir = True
+        else:
+            newunsorted.append(entry)
+    unsorted = newunsorted[:]
+
 if unsorted and len(unsorted):
     logging.info("Sorting %d files: " + str(unsorted), len(unsorted))
 
@@ -53,7 +77,8 @@ for unsorted_file in unsorted:
             if 'discnumber' in tags and tags['discnumber'][0] != u'1/1':
                 title = tags['discnumber'][0].split('/')[0] + '-' + title
     else:
-        title = unsorted_file
+        (head, tail) = os.path.split(unsorted_file)
+        title = tail
 
     title = sanitize(title)
     album = sanitize(album)
@@ -72,3 +97,7 @@ for unsorted_file in unsorted:
     except IOError, why:
         shutil.move(UNSORTED_DIR + unsorted_file, ERROR_DIR + unsorted_file)
         logging.warning(' ** IOERROR: ' +  str(why))
+
+logging.info("Removing directories " + str(folders))
+for entry in folders:
+    os.rmdir(UNSORTED_DIR + entry)
