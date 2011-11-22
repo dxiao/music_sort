@@ -19,7 +19,7 @@ def sanitize (string):
 UNSORTED_DIR= "/media/raptor/Music-Inbox/"
 SORTED_DIR  = "/media/raptor/Music/"
 ERROR_DIR   = "/media/raptor/Music-Errors/"
-BLANK_TAG   = {blank: True}
+BLANK_TAG   = {'blank': True}
 
 #UNSORTED_DIR= './Unsorted/'
 #SORTED_DIR  = './Sorted/'
