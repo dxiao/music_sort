@@ -57,7 +57,7 @@ for unsorted_file in unsorted:
         tags = mutagen.File(UNSORTED_DIR + unsorted_file, easy=True)
     except IOError, why:
         logging.info(" ** Could not get mutagen to read file: " 
-            + unsorted_file + "\n" + why)
+            + unsorted_file + "\n" + str(why))
         continue
 
     if not tags:
