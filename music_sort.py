@@ -49,7 +49,7 @@ while found_dir:
             newunsorted.append(entry)
     unsorted = newunsorted[:]
 
-if unsorted and len(unsorted):
+if unsorted:
     logging.info("Sorting %d files: " + str(unsorted), len(unsorted))
 
 for unsorted_file in unsorted:
