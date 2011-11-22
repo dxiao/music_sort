@@ -1,14 +1,14 @@
 #! /usr/bin/env python
 
 import mutagen
-import os
+import os, sys
 import shutil
 import logging
 import re
 
 logging.basicConfig(format='%(asctime)s %(message)s', 
     datefmt='%m/%d/%Y %H:%M:%S', 
-    filename='/var/log/music_sort', level=logging.DEBUG)
+    filename='/var/log/music_sort.log', level=logging.DEBUG)
 #logging.basicConfig(format='%(asctime)s %(message)s', 
 #    datefmt='%m/%d/%Y %H:%M:%S', 
 #    filename='./log.log', level=logging.DEBUG)
@@ -24,9 +24,13 @@ ERROR_DIR   = "/media/raptor/Music-Errors/"
 #SORTED_DIR  = './Sorted/'
 #ERROR_DIR   = './Error/'
 
+if len(os.listdir(UNSORTED_DIR)) == 0:
+    sys.exit()
+
 logging.info("---")
 logging.info("Starting new music scan...")
 logging.info("")
+
 
 unsorted    = os.listdir(UNSORTED_DIR)
 found_dir   = True
@@ -49,7 +53,12 @@ if unsorted and len(unsorted):
     logging.info("Sorting %d files: " + str(unsorted), len(unsorted))
 
 for unsorted_file in unsorted:
-    tags = mutagen.File(UNSORTED_DIR + unsorted_file, easy=True)
+    try:
+        tags = mutagen.File(UNSORTED_DIR + unsorted_file, easy=True)
+    except IOError, why:
+        logging.info(" ** Could not get mutagen to read file: " 
+            + unsorted_file + "\n" + why)
+        continue
 
     if not tags:
         shutil.move(UNSORTED_DIR + unsorted_file, 
