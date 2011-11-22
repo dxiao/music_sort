@@ -19,6 +19,7 @@ def sanitize (string):
 UNSORTED_DIR= "/media/raptor/Music-Inbox/"
 SORTED_DIR  = "/media/raptor/Music/"
 ERROR_DIR   = "/media/raptor/Music-Errors/"
+BLANK_TAG   = {}
 
 #UNSORTED_DIR= './Unsorted/'
 #SORTED_DIR  = './Sorted/'
@@ -55,6 +56,10 @@ if unsorted:
 for unsorted_file in unsorted:
     try:
         tags = mutagen.File(UNSORTED_DIR + unsorted_file, easy=True)
+    except HeaderNotFoundError, why:
+        tags = BLANK_TAG
+        logging.info(" ** Could not get mutagen to read headers: " 
+            + unsorted_file + "using blank tags instead")
     except IOError, why:
         logging.info(" ** Could not get mutagen to read file: " 
             + unsorted_file + "\n" + str(why))
