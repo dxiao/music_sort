@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-import os
+import os, sys
 import shutil
 import logging
 import re
@@ -128,6 +128,10 @@ if __name__ == '__main__':
     #logging.basicConfig(format='%(asctime)s %(message)s', 
     #    datefmt='%m/%d/%Y %H:%M:%S', 
     #    filename='./playlist_import.log', level=logging.DEBUG)
+
+    if len(os.listdir(INBOX_DIR)) == 0:
+        sys.exit()
+
     logging.info("---")
     logging.info("Starting new music scan...")
     logging.info("")
