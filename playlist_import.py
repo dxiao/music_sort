@@ -114,12 +114,11 @@ def process_new_folder(listfolder):
     old_entry = list(BLANK_ENTRY)
     (files, folders) = music_sort.get_all_files_in_dir(unsorted_dir)
 
-    if opt['delta'] == False:
-        logging.info("Creating playlist folder")
-        try:
-            os.mkdir(PLAYLIST_DIR + listfolder)
-        except OSError, why:
-            logging.info('    OSERROR while creating playlist folder: ' + str(why))
+    logging.info("Creating playlist folder")
+    try:
+        os.mkdir(PLAYLIST_DIR + listfolder)
+    except OSError, why:
+        logging.info('    OSERROR while creating playlist folder: ' + str(why))
 
     for new_file in files:
         logging.info("    Processing file: " + unsorted_dir + new_file)
@@ -128,6 +127,12 @@ def process_new_folder(listfolder):
         logging.info("    Got entries: " + str(entry_tuple))
         if music_sort.sort_file(new_file, unsorted_dir):
             make_symlink(list(entry_tuple), old_entry, listfolder)
+
+    # post process
+    logging.info("Removing directories " + str(folders))
+    for entry in folders:
+        os.rmdir(unsorted_dir + entry)
+    os.rmdir(unsorted_dir)
 
 if __name__ == '__main__':
 
