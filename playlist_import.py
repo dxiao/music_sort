@@ -106,6 +106,7 @@ def process_new_list(listentry):
         logging.info(' ** IOError while moving playlist file:' + str(why))
 
 def process_new_folder(listfolder):
+
     logging.info("Adding music, playlist " + listfolder)
 
     unsorted_dir = INBOX_DIR + listfolder + '/'
