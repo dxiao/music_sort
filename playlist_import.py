@@ -113,6 +113,14 @@ def process_new_folder(listfolder):
 
     old_entry = list(BLANK_ENTRY)
     (files, folders) = music_sort.get_all_files_in_dir(unsorted_dir)
+
+    if opt['delta'] == False:
+        logging.info("Creating playlist folder")
+        try:
+            os.mkdir(PLAYLIST_DIR + listfolder)
+        except OSError, why:
+            logging.info('    OSERROR while creating playlist folder: ' + str(why))
+
     for new_file in files:
         logging.info("    Processing file: " + unsorted_dir + new_file)
         tags        = music_sort.get_tags(new_file, unsorted_dir, unsorted_dir)
