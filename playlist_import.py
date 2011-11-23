@@ -113,7 +113,7 @@ def process_new_folder(listfolder):
     old_entry = list(BLANK_ENTRY)
     (files, folders) = music_sort.get_all_files_in_dir(unsorted_dir)
     for new_file in files:
-        logging.info("    Processing file: " + str(new_file))
+        logging.info("    Processing file: " + unsorted_dir + new_file)
         tags        = music_sort.get_tags(new_file, unsorted_dir, unsorted_dir)
         entry_tuple = music_sort.process_tags(new_file, tags)
         logging.info("    Got entries: " + str(entry_tuple))
