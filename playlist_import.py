@@ -122,12 +122,12 @@ def process_new_folder(listfolder):
 
 if __name__ == '__main__':
 
-    #logging.basicConfig(format='%(asctime)s %(message)s', 
-    #    datefmt='%m/%d/%Y %H:%M:%S', 
-    #    filename='/var/log/playlist_import.log', level=logging.DEBUG)
     logging.basicConfig(format='%(asctime)s %(message)s', 
         datefmt='%m/%d/%Y %H:%M:%S', 
-        filename='./playlist_import.log', level=logging.DEBUG)
+        filename='/var/log/playlist_import.log', level=logging.DEBUG)
+    #logging.basicConfig(format='%(asctime)s %(message)s', 
+    #    datefmt='%m/%d/%Y %H:%M:%S', 
+    #    filename='./playlist_import.log', level=logging.DEBUG)
     logging.info("---")
     logging.info("Starting new music scan...")
     logging.info("")

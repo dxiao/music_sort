@@ -122,12 +122,12 @@ def sort_file(unsorted_file, unsorted_dir=UNSORTED_DIR,
 
 if __name__ == '__main__':
 
-    #logging.basicConfig(format='%(asctime)s %(message)s', 
-    #    datefmt='%m/%d/%Y %H:%M:%S', 
-    #    filename='/var/log/music_sort.log', level=logging.DEBUG)
     logging.basicConfig(format='%(asctime)s %(message)s', 
         datefmt='%m/%d/%Y %H:%M:%S', 
-        filename='./music_sort.log', level=logging.DEBUG)
+        filename='/var/log/music_sort.log', level=logging.DEBUG)
+    #logging.basicConfig(format='%(asctime)s %(message)s', 
+    #    datefmt='%m/%d/%Y %H:%M:%S', 
+    #    filename='./music_sort.log', level=logging.DEBUG)
 
     if len(os.listdir(UNSORTED_DIR)) == 0:
         sys.exit()
