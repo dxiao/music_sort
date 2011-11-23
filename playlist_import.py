@@ -7,8 +7,8 @@ import re
 import music_sort
 
 
-INBOX_DIR   = "/media/raptor/Playlist-Inbox/"
-PLAYLIST_DIR= "/media/raptor/Playlist/"
+INBOX_DIR   = "/media/raptor/Playlists-Inbox/"
+PLAYLIST_DIR= "/media/raptor/Playlists/"
 MUSIC_DIR   = "/media/raptor/Music/"
 
 #INBOX_DIR   = os.path.abspath("./Playlist-Inbox/") + '/'
