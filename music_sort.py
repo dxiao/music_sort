@@ -98,7 +98,7 @@ def get_all_files_in_dir(directory=UNSORTED_DIR):
 def sort_file(unsorted_file, unsorted_dir=UNSORTED_DIR, 
         sorted_dir=SORTED_DIR, error_dir=ERROR_DIR):
 
-    tags = get_tags(unsorted_file)
+    tags = get_tags(unsorted_file, unsorted_dir, error_dir)
     if tags is None:
         return False
 
